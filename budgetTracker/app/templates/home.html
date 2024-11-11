@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<hr class="my-4">
+
+<div class="row">
+    <!-- Expenses Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm p-4">
+            <h2 class="card-title mb-4">Expenses</h2>
+            
+            {% for date, expenses in grouped_expense.items %}
+                <p class="font-weight-bold mt-2">{{ date }}</p>
+                {% for expense in expenses %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <a href="{% url 'expense-update' expense.id %}" class="text-decoration-none text-dark">
+                            ₹{{ expense.amount }}
+                        </a>
+                        <span class="text-muted">{{ expense.category }}</span>
+                    </div>
+                {% endfor %}
+                <hr class="my-3">
+            {% endfor %}
+            
+            <!-- Total and View All Link -->
+            <div class="d-flex justify-content-between mt-3">
+                <p class="mb-0">Total: ₹{{ total_expenses }}</p>
+                <a href="" class="text-decoration-none">View All</a>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+    <!-- Income Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm p-4 mb-4">
+            <h2 class="card-title mb-3">Income</h2>
+            {% for i in income %}
+                <div class="d-flex justify-content-between mb-2">
+                    <a href="{% url 'income-update' i.id %}" class="text-decoration-none text-dark">₹{{ i.amount }}</a>
+                    <span class="text-muted">{{ i.source }}</span>
+                </div>
+            {% endfor %}
+            <hr>       
+            <p class="font-weight-bold">Monthly Income: ₹{{ total_income }}</p>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

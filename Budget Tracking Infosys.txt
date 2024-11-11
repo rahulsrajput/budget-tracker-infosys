@@ -1,0 +1,4 @@
+TASK
+	1 - user registration and login, logout
+	2 - expense form , view , db and income form , view , db 
+	
