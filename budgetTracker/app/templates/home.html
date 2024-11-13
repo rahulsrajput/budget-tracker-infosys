@@ -3,54 +3,112 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
 <hr class="my-4">
 
 <div class="row">
-    <!-- Expenses Section -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm p-4">
-            <h2 class="card-title mb-4">Expenses</h2>
-            
-            {% for date, expenses in grouped_expense.items %}
-                <p class="font-weight-bold mt-2">{{ date }}</p>
-                {% for expense in expenses %}
-                    <div class="d-flex justify-content-between mb-2">
-                        <a href="{% url 'expense-update' expense.id %}" class="text-decoration-none text-dark">
-                            ₹{{ expense.amount }}
-                        </a>
-                        <span class="text-muted">{{ expense.category }}</span>
-                    </div>
-                {% endfor %}
-                <hr class="my-3">
-            {% endfor %}
+    <!-- Expenses Section (Full Width) -->
+    <div class="col-12 mb-4">
+        <div class="card text-white shadow-sm p-4">
+            <h4 class="card-title">Recent Expenses</h4>
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expense_obj %}  
+                        <tr class="text-white-50">
+                            <th scope="row">{{expense.id}}</th>
+                            <td>₹{{expense.amount}}</td>
+                            <td><span class="badge rounded-pill bg-success">{{expense.category}}</span></td>
+                            <td>{{expense.date}}</td>
+                            <td><a href="{% url 'expense-update' expense.id %}" style="text-decoration: none;">Update/Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>            
             
             <!-- Total and View All Link -->
+            <hr class="my-2">
             <div class="d-flex justify-content-between mt-3">
-                <p class="mb-0">Total: ₹{{ total_expenses }}</p>
-                <a href="" class="text-decoration-none">View All</a>
+                <p class="mb-0 text-danger">Total Expenses: ₹{{ total_expenses }}</p>
+                <a href="{% url 'expenses' %}" class="text-decoration-none text-primary">View All</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-4">
+        <div class="card text-white shadow-sm p-4">
+            <h4 class="card-title">Quick Access</h4>
+            <hr>
+            <div class="row g-3">
+                <!-- Button 1 (will be side by side on large screens) -->
+                <div class="col-12 col-md-6">
+                    <a href="{% url 'expense-add' %}" class="btn btn-primary btn-lg w-100 rounded">+ New expense</a>
+                </div>
+                <!-- Button 2 (will be side by side on large screens) -->
+                <div class="col-12 col-md-6">
+                    <a href="{% url 'income-add' %}" class="btn btn-success btn-lg w-100 rounded">+ New income</a>
+                </div>
+                <!-- Button 3 (will be side by side on large screens) -->
+                <div class="col-12 col-md-6">
+                    <a href="#" class="btn btn-success btn-lg w-100 rounded">Set Budget</a>
+                </div>
+                <!-- Button 4 (will be side by side on large screens) -->
+                <div class="col-12 col-md-6">
+                    <a href="#" class="btn btn-primary btn-lg w-100 rounded">Download report</a>
+                </div>
             </div>
         </div>
     </div>
     
-    
+    <div class="col-12 mb-4">
+        <div class="card text-white shadow-sm p-4">
+            <h4 class="card-title">Monthly Income</h4>
+            <hr>
 
-
-    <!-- Income Section -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm p-4 mb-4">
-            <h2 class="card-title mb-3">Income</h2>
-            {% for i in income %}
-                <div class="d-flex justify-content-between mb-2">
-                    <a href="{% url 'income-update' i.id %}" class="text-decoration-none text-dark">₹{{ i.amount }}</a>
-                    <span class="text-muted">{{ i.source }}</span>
-                </div>
-            {% endfor %}
-            <hr>       
-            <p class="font-weight-bold">Monthly Income: ₹{{ total_income }}</p>
+            <div class="table-responsive">
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in income %}  
+                        <tr class="text-white-50">
+                            <th scope="row">{{obj.id}}</th>
+                            <td>₹{{obj.amount}}</td>
+                            <td>{{obj.source | capfirst}}</td>
+                            <td>{{obj.date}}</td>
+                            <td><a href="{% url 'income-update' obj.id %}" style="text-decoration: none;">Update/Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>            
+            
+            <!-- Total and View All Link -->
+            <hr class="my-2">
+            <div class="d-flex justify-content-between mt-3">
+                <p class="mb-0 text-danger">Total Income: ₹{{ total_income }}</p>
+            </div>
         </div>
     </div>
 </div>
-
-
 
 {% endblock %}

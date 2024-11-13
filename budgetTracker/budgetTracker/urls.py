@@ -26,7 +26,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('register/', views.register_view, name='register'),
 
-    # 
+    #
+    path('expenses/', views.expenses_view, name='expenses'),
     path('expense-add/', views.expense_add_view, name='expense-add'),
     path('expense-update/<int:id>', views.expense_update_view, name="expense-update"),
     path('expense-delete/<int:id>', views.expense_delete_view, name='expense-delete'),
